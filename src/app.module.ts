@@ -18,6 +18,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { SubjectsModule } from './modules/subjects/subjects.module';
 import { AddressModule } from './modules/address/address.module';
 import { CategoryModule } from './modules/category/category.module';
+import { CourseModule } from './modules/course/course.module';
 
 @Module({
   imports: [
@@ -96,12 +97,17 @@ import { CategoryModule } from './modules/category/category.module';
         path: 'category',
         module: CategoryModule,
       },
+      {
+        path: 'course',
+        module: CourseModule,
+      },
     ]),
     UserModule,
     ProfileModule,
     SubjectsModule,
     AddressModule,
     CategoryModule,
+    CourseModule,
   ],
   providers: [
     // Global Guard, Authentication check on all routers

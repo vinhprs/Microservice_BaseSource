@@ -167,7 +167,7 @@ export class UserService {
         },
         HttpStatus.BAD_REQUEST,
       );
-    console.log(code, user)
+    console.log(code, user);
     if (code !== user.emailVerifyCode)
       throw new HttpException(
         {
@@ -231,6 +231,7 @@ export class UserService {
     data: UpdateUserInput,
   ): Promise<BaseApiResponse<UserOutputDto>> {
     const { address } = data;
+    let userAddr;
     const user = await this.getUserByUserId(id);
     if (!user)
       throw new HttpException(
@@ -242,7 +243,7 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     this.userRepository.merge(user, data);
-    const userAddr = await this.addressService.createAddress(address);
+    if (address) userAddr = await this.addressService.createAddress(address);
     const updated = await this.userRepository.save({
       ...user,
       address: userAddr,

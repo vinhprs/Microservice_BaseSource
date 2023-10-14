@@ -11,30 +11,28 @@ import { MESSAGES } from '../../common/constants';
 export class CategoryService {
   constructor(
     @InjectRepository(Category)
-    private readonly categoryRepository: Repository<Category>
+    private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  async getCategory()
-  : Promise<BaseApiResponse<CategoryOutput[]>> {
-    const category = await this.categoryRepository.createQueryBuilder('category')
+  async getCategory(): Promise<BaseApiResponse<CategoryOutput[]>> {
+    const category = await this.categoryRepository
+      .createQueryBuilder('category')
       .andWhere('category.category_id IS NULL')
       .leftJoinAndSelect('category.childs', 'childs')
       .getMany();
-    
+
     const result = plainToInstance(CategoryOutput, category, {
-      excludeExtraneousValues: true
+      excludeExtraneousValues: true,
     });
     return {
       error: false,
       data: result,
       message: MESSAGES.GET_SUCCEED,
-      code: 200
+      code: 200,
     };
   }
 
-  async create(
-    data: CreateCategory
-  ): Promise<BaseApiResponse<CategoryOutput>>{
+  async create(data: CreateCategory): Promise<BaseApiResponse<CategoryOutput>> {
     const createCategory = this.categoryRepository.create(data);
 
     if (data.categoryId) {
@@ -47,14 +45,14 @@ export class CategoryService {
     }
     await this.categoryRepository.save(createCategory);
     const result = plainToInstance(CategoryOutput, createCategory, {
-      excludeExtraneousValues: true
+      excludeExtraneousValues: true,
     });
 
     return {
       error: false,
       data: result,
       message: MESSAGES.CREATED_SUCCEED,
-      code: 200
+      code: 200,
     };
   }
 }

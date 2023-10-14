@@ -3,7 +3,6 @@ import {
   IsArray,
   IsBoolean,
   IsDate,
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -32,17 +31,17 @@ export class UpdateUserInput {
   @IsOptional()
   birthDate?: Date;
 
-  @IsNotEmpty()
   @ValidateNested({ each: true })
+  @IsOptional()
   @Type(() => AddressInput)
-  address: AddressInput;
+  address?: AddressInput;
 
-  @IsNotEmpty()
   @IsArray()
   @IsNumber({}, { each: true })
-  subjects: number[];
+  @IsOptional()
+  subjects?: number[];
 
-  @IsNotEmpty()
   @IsNumber()
-  subjectGroup: number;
+  @IsOptional()
+  subjectGroup?: number;
 }
