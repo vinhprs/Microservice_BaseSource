@@ -15,6 +15,9 @@ export class Course {
   @Column('int', { nullable: false, name: 'price' })
   price!: number;
 
+  @Column('text', { nullable: true, name: 'thumbnail_url' })
+  thumbnail_url: string;
+
   @Column('date', { nullable: true, name: 'expired_date' })
   expiredDate: Date;
 

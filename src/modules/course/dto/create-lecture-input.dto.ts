@@ -1,4 +1,10 @@
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { LECTURE_TYPE } from '../../../shared/enums';
 
 export class CreateLecture {
@@ -10,9 +16,9 @@ export class CreateLecture {
   @IsEnum(LECTURE_TYPE)
   lectureType: LECTURE_TYPE;
 
-  @IsNotEmpty()
-  @IsString()
-  amount: string;
+  @IsNumber()
+  @IsOptional()
+  duration: number;
 
   @IsNotEmpty()
   @IsString()

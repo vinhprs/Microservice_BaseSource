@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from './entities';
-import { Repository } from 'typeorm';
-import { CategoryOutput, CreateCategory } from './dto';
 import { plainToInstance } from 'class-transformer';
-import { BaseApiResponse } from '../../shared/dtos';
+import { Repository } from 'typeorm';
 import { MESSAGES } from '../../common/constants';
+import { BaseApiResponse } from '../../shared/dtos';
+import { CategoryOutput, CreateCategory } from './dto';
+import { Category } from './entities';
 
 @Injectable()
 export class CategoryService {
@@ -14,11 +14,29 @@ export class CategoryService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
+  async getSubCategory(
+    names: string[],
+    parentId: number,
+  ): Promise<CategoryOutput[]> {
+    const subCategories = await this.categoryRepository
+      .createQueryBuilder('subCategory')
+      .andWhere('subCategory.categoryName IN (:...names)', { names })
+      .andWhere('subCategory.category_id = :id', { id: parentId })
+      .getMany();
+
+    const result = plainToInstance(CategoryOutput, subCategories, {
+      excludeExtraneousValues: true,
+    });
+    return result;
+  }
+
   async getCategory(): Promise<BaseApiResponse<CategoryOutput[]>> {
     const category = await this.categoryRepository
       .createQueryBuilder('category')
       .andWhere('category.category_id IS NULL')
       .leftJoinAndSelect('category.childs', 'childs')
+      .orderBy('category.categoryName')
+      .addOrderBy('childs._id')
       .getMany();
 
     const result = plainToInstance(CategoryOutput, category, {

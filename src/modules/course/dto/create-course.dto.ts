@@ -16,6 +16,7 @@ export class CreateCourseDto {
   @IsString()
   description: string;
 
+  @Type(() => Number)
   @IsNumber()
   @IsNotEmpty()
   price: number;
@@ -25,10 +26,12 @@ export class CreateCourseDto {
   @IsNotEmpty()
   expiredDate: Date;
 
+  @Type(() => Number)
   @IsNumber()
   @IsNotEmpty()
   categoryId: number;
 
+  @Type(() => Number)
   @IsNumber()
   @IsNotEmpty()
   subCategoryId: number;

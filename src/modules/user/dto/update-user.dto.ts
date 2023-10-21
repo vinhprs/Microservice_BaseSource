@@ -36,10 +36,14 @@ export class UpdateUserInput {
   @Type(() => AddressInput)
   address?: AddressInput;
 
-  @IsArray()
-  @IsNumber({}, { each: true })
+  @IsNumber()
   @IsOptional()
-  subjects?: number[];
+  grade: number;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  subjectNames: string[];
 
   @IsNumber()
   @IsOptional()
