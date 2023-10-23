@@ -2,7 +2,7 @@ version: '3.9'
 services:
   backendapi:
     build:
-      context: ./docker
+      context: .
     image: vinhprs/prime-edu-backend
     container_name: backend
     ports:
