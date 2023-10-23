@@ -7,7 +7,6 @@ import { LoggerModule } from 'nestjs-pino';
 
 import { CommonModule, ExceptionsFilter } from './common';
 import { configuration, loggerOptions } from './config';
-import { SampleModule as DebugSampleModule } from './debug';
 import { UserModule } from './modules/user/user.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthModule } from './auth';
@@ -72,7 +71,6 @@ import { CourseModule } from './modules/course/course.module';
     // Service Modules
     CommonModule, // Global
     SharedModule,
-    DebugSampleModule,
     AuthModule,
     // Module Router
     // https://docs.nestjs.com/recipes/router-module
